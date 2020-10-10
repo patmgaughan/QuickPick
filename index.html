@@ -1,0 +1,81 @@
+<head>
+</head>
+<body>
+	<h1>Quick Pick Lottery</h1>
+	<script language="javascript">
+		ticket = [0, 0, 0, 0, 0];
+		winning = [5, 8, 9, 25, 29];
+		luckyQuess = ((Math.random()*17) + 1).toFixed(0);
+		luckyBall = 1;
+		match = 0;
+
+		for(p = 0; p < 5; p++){
+			ticket[p] = ((Math.random()*47) + 1).toFixed(0);
+		}
+		newString = removeCommas(ticket)
+
+		newString = prompt("Enter 5 numbers seperated by a space: ", newString);
+		luckyQuess = prompt("Enter your numbers: ", luckyQuess);
+
+		ticket = newString.match(/\d+/g);
+		ticket.sort((a, b) => a - b);
+
+		for(i = 0; i < 5; i++){
+			if(winning.includes(parseInt(ticket[i]))){
+				match++;
+			}
+		}
+		if(luckyBall == luckyQuess){
+			if(match == 0){
+				match = 6;
+			}else{
+				match = match * 10;
+			}
+		}
+
+		document.write("Your Ticket: ");
+		printArray(ticket);
+		document.write("Your Lucky Nummber: " + luckyQuess + "<br>");
+		document.write("<br>");
+		document.write("Winning Ticket: ");
+		printArray(winning);
+		document.write("Lucky Ball: " + luckyBall + "<br>");
+		document.write("<br>");
+		console.log("Matching Numbers: " + match + "<br>");
+		prize = " nothing :(";
+		switch (match) {
+			case 6: prize = ": $4"; break;
+			case 10: prize = ": $6"; break;
+			case 2: prize = ": $3"; break;
+			case 20: prize = ": $25"; break;
+			case 3: prize = ": $20"; break;
+			case 30: prize = ": $150"; break;
+			case 4: prize = ": $200"; break;
+			case 40: prize = ": $5,000"; break;
+			case 5: prize = ": $25,000 a YEAR for LIFE"; break;
+			case 50: prize = "$: $7,000 a WEEK for LIFE"; break;
+		}
+		document.write("You have won" + prize);
+
+		function removeCommas(ticket) {
+			string = ticket.toString();
+			var output = "";
+			for(i = 0; i < string.length; i++){
+				if(string[i] == ","){
+					output = output + " ";
+				}else{
+					output = output + string[i];
+				}
+			}
+			return output;
+		}
+
+		function printArray(ticket) {
+			for(i = 0; i < ticket.length; i++){
+				document.write(ticket[i] + " ");
+			}
+			document.write("<br>");
+		}
+
+	</script>
+</body>
