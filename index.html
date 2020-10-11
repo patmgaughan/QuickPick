@@ -1,31 +1,53 @@
 <head>
+	<title>Joe's Hotdog Stand</title>
+	<style>
+		body{
+			margin: 20px;
+			padding: 0px;
+			text-align: center;
+			background: #282923;
+			color: #8688f8;
+			font-size: 25px;
+			text-shadow: -1px 1px #fff;
+			font-family: "Trebuchet MS", Helvetica, sans-serif;
+		}
+		h1 {
+			font-size: 60px;
+			color: #b3d44d;
+			text-shadow: 2px 2px #fff;
+		}
+	</style>
 </head>
 <body>
 	<h1>Quick Pick Lottery</h1>
 	<script language="javascript">
-		ticket = [0, 0, 0, 0, 0];
+		quickPick = [0, 0, 0, 0, 0];
 		winning = [5, 8, 9, 25, 29];
-		luckyQuess = ((Math.random()*17) + 1).toFixed(0);
+		quickPickLucky = parseInt(((Math.random()*17) + 1).toFixed(0));
 		luckyBall = 1;
 		match = 0;
 
 		for(p = 0; p < 5; p++){
-			ticket[p] = ((Math.random()*47) + 1).toFixed(0);
+			quickPick[p] = parseInt(((Math.random()*47) + 1).toFixed(0));
 		}
-		newString = removeCommas(ticket)
+		quickPick.sort((a, b) => a - b);
 
-		newString = prompt("Enter 5 numbers seperated by a space: ", newString);
-		luckyQuess = prompt("Enter your numbers: ", luckyQuess);
+		newString = removeCommas(winning);
 
-		ticket = newString.match(/\d+/g);
-		ticket.sort((a, b) => a - b);
+		newString = prompt("Enter 5 winning numbers seperated by a space: ", newString);
+		luckyBall = prompt("Enter winning Lucky Ball number: ", luckyBall);
+
+		winning = newString.match(/\d+/g);
+		winning.sort((a, b) => a - b);
+
 
 		for(i = 0; i < 5; i++){
-			if(winning.includes(parseInt(ticket[i]))){
+			if(quickPick.includes(parseInt(winning[i]))){
 				match++;
 			}
 		}
-		if(luckyBall == luckyQuess){
+
+		if(luckyBall == quickPickLucky){
 			if(match == 0){
 				match = 6;
 			}else{
@@ -33,13 +55,13 @@
 			}
 		}
 
-		document.write("Your Ticket: ");
-		printArray(ticket);
-		document.write("Your Lucky Nummber: " + luckyQuess + "<br>");
+		document.write("Quick Pick: ");
+		printArray(quickPick);
+		document.write("Quick Pick Lucky Ball: " + quickPickLucky + "<br>");
 		document.write("<br>");
 		document.write("Winning Ticket: ");
 		printArray(winning);
-		document.write("Lucky Ball: " + luckyBall + "<br>");
+		document.write("Winning Lucky Ball: " + luckyBall + "<br>");
 		document.write("<br>");
 		console.log("Matching Numbers: " + match + "<br>");
 		prize = " nothing :(";
@@ -53,7 +75,7 @@
 			case 4: prize = ": $200"; break;
 			case 40: prize = ": $5,000"; break;
 			case 5: prize = ": $25,000 a YEAR for LIFE"; break;
-			case 50: prize = "$: $7,000 a WEEK for LIFE"; break;
+			case 50: prize = ": $7,000 a WEEK for LIFE"; break;
 		}
 		document.write("You have won" + prize);
 
